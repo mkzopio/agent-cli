@@ -1,0 +1,75 @@
+# Keep routine updates grouped; review major upgrades separately.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /deploy/openclaw-railway
+    schedule:
+      interval: weekly
+      day: monday
+      time: 06:00
+      timezone: Europe/Istanbul
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      development:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+        dependency-type: development
+      runtime:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+        dependency-type: production
+      security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: 06:15
+      timezone: Europe/Istanbul
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      routine:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+      security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+  - package-ecosystem: docker
+    directories:
+      - /
+      - /deploy/openclaw-railway
+    schedule:
+      interval: weekly
+      day: monday
+      time: 06:30
+      timezone: Europe/Istanbul
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      routine:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
